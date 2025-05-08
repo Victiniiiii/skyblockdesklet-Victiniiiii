@@ -1,0 +1,11 @@
+{
+	"uuid": "skyblockdesklet@Victiniiiii",
+	"name": "Skyblock Prices Desklet",
+	"description": "Shows Skyblock items' buy-sell prices.",
+	"version": 1,
+	"maxInstances": 1,
+	"multiversion": true,
+	"stylesheet": "stylesheet.css",
+	"category": "utility",
+	"icon": "icon.svg"
+}
