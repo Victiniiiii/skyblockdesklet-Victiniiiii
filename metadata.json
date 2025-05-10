@@ -7,5 +7,6 @@
 	"multiversion": true,
 	"stylesheet": "stylesheet.css",
 	"category": "utility",
-	"icon": "icon.png"
+	"icon": "icon.png",
+	"settings-schema": "settings-schema.json"
 }

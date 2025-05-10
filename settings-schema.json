@@ -1,0 +1,26 @@
+{
+	"header_general": {
+		"type": "header",
+		"description": "General Settings"
+	},
+	"items_list": {
+		"type": "textview",
+		"default": "COMPOST\nENCHANTED_BREAD\nHOT_POTATO_BOOK",
+		"description": "SkyBlock Items to track (one item ID per line)",
+		"height": 100
+	},
+	"update_interval": {
+		"type": "spinbutton",
+		"default": 30,
+		"min": 5,
+		"max": 120,
+		"step": 5,
+		"units": "minutes",
+		"description": "Update interval"
+	},
+	"apply_button": {
+		"type": "button",
+		"description": "Apply Settings",
+		"callback": "on_apply_clicked"
+	}
+}
