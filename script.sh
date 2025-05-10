@@ -11,6 +11,9 @@ buy_price=$(echo "$data" | jq -r ".products.${ITEM}.buy_summary[0].pricePerUnit"
 if [[ "$sell_price" == "null" || "$buy_price" == "null" ]]; then
     echo "Invalid item: $ITEM"
 else
-    echo "$ITEM Buy Price: $buy_price coins"
-    echo "$ITEM Sell Price: $sell_price coins"
+    sell_price_int=$(printf "%.0f" "$sell_price")
+    buy_price_int=$(printf "%.0f" "$buy_price")
+
+    echo "$ITEM"
+    echo "Buy $sell_price_int - $buy_price_int Sell"
 fi

@@ -167,7 +167,7 @@ SkyblockPricesDesklet.prototype = {
 			minute: "2-digit",
 			hour12: false,
 		});
-		this.lastUpdatedLabel.set_text("Last Updated: " + currentTimeFormatted);
+		this.lastUpdatedLabel.set_text("Victiniiiii's Skyblock Desklet.\nLast Updated: " + currentTimeFormatted);
 
 		return true;
 	},
