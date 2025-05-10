@@ -4,19 +4,78 @@
 	text-align: center;
 }
 
+.skyblock-desklet {
+	background-color: rgba(30, 30, 40, 0.85);
+	border-radius: 12px;
+	border: 1px solid rgba(100, 100, 255, 0.3);
+	padding: 10px 10px 0 10px;
+	box-shadow: 0 3px 10px rgba(0, 0, 0, 0.3);
+}
+
 .lastUpdatedLabel {
 	font-size: 10pt;
 	font-style: italic;
 	color: #aaa;
-	margin: 5px 0;
+	margin: 5px 0 10px 0;
+	padding-bottom: 5px;
+	border-bottom: 1px solid rgba(100, 100, 255, 0.3);
 }
 
-.separator {
-	background-color: rgba(200, 200, 200, 0.5);
-    margin-bottom: 10px;
+.section-header {
+	font-size: 14pt;
+	font-weight: bold;
+	color: #7ba6ff;
+	margin: 10px 0 5px 0;
+	text-shadow: 0 1px 2px rgba(0, 0, 0, 0.5);
+	border-bottom: 1px solid rgba(150, 150, 150, 0.2);
+}
+
+.section-container {
+	background-color: rgba(50, 50, 70, 0.7);
+	border-radius: 8px;
+	margin-bottom: 15px;
+	margin-left: 20px;
+	padding: 10px;
+	border: 1px solid rgba(100, 100, 255, 0.2);
+}
+
+.header-separator {
+	background: linear-gradient(to right, transparent, rgba(100, 150, 255, 0.5), transparent);
+	margin-bottom: 10px;
+}
+
+.item-box {
+	background-color: rgba(60, 60, 80, 0.6);
+	border-radius: 6px;
+	padding: 8px;
+	margin: 5px 0;
+	border-left: 3px solid rgba(120, 160, 255, 0.6);
+}
+
+.item-name {
+	font-weight: bold;
+	color: #afd4ff;
+	font-size: 11pt;
+	margin-bottom: 3px;
+}
+
+.item-price {
+	color: #d4ff7f;
+	font-size: 10pt;
 }
 
 .item-separator {
-	background-color: rgba(150, 150, 150, 0.3);
-	margin: 10px 0;
+	background-color: rgba(150, 150, 150, 0.2);
+	margin: 8px 0;
+	height: 1px;
+}
+
+.section-divider {
+	height: 2px;
+	background: linear-gradient(to right, transparent, rgba(200, 200, 255, 0.4), transparent);
+	margin: 15px 0;
+}
+
+.scrollview {
+	padding-right: 5px;
 }

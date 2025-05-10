@@ -3,12 +3,6 @@
 		"type": "header",
 		"description": "General Settings"
 	},
-	"items_list": {
-		"type": "textview",
-		"default": "COMPOST\nENCHANTED_BREAD\nHOT_POTATO_BOOK",
-		"description": "SkyBlock Items to track (one item ID per line)",
-		"height": 100
-	},
 	"update_interval": {
 		"type": "spinbutton",
 		"default": 30,
@@ -17,6 +11,26 @@
 		"step": 5,
 		"units": "minutes",
 		"description": "Update interval"
+	},
+	"header_bazaar": {
+		"type": "header",
+		"description": "Bazaar Settings"
+	},
+	"bazaar_items_list": {
+		"type": "textview",
+		"default": "COMPOST\nENCHANTED_BREAD\nHOT_POTATO_BOOK",
+		"description": "Bazaar Items to track (one item ID per line)",
+		"height": 100
+	},
+	"header_auction": {
+		"type": "header",
+		"description": "Auction House Settings"
+	},
+	"auction_items_list": {
+		"type": "textview",
+		"default": "Chestplate_of_Divan\nWarden_Helmet\nHyperion",
+		"description": "Auction House Items to track (one item tag per line)",
+		"height": 100
 	},
 	"apply_button": {
 		"type": "button",
