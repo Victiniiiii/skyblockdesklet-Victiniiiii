@@ -14,8 +14,15 @@ var ScriptOutputDesklet = class ScriptOutputDesklet extends Desklet.Desklet {
 
 		this.metadata = metadata;
 
+		this.box = new St.BoxLayout({ vertical: true });
+
+		this.lastUpdatedLabel = new St.Label({ text: "Last Updated: N/A", name: "lastUpdatedLabel" });
 		this.text = new St.Label({ text: "Loading..." });
-		this.setContent(this.text);
+
+		this.box.add(this.lastUpdatedLabel);
+		this.box.add(this.text);
+
+		this.setContent(this.box);
 
 		this.update();
 	}
@@ -26,11 +33,18 @@ var ScriptOutputDesklet = class ScriptOutputDesklet extends Desklet.Desklet {
 
 		let [res, out, err, status] = GLib.spawn_command_line_sync(`/bin/bash "${scriptPath}"`);
 
+		let currentTime = new Date();
+		let currentTimeFormatted = currentTime.toLocaleTimeString([], { hour: "2-digit", minute: "2-digit", hour12: false });
+
+		let lastUpdatedText = "Last Updated: " + currentTimeFormatted;
+
 		if (res && out) {
 			this.text.set_text(out.toString().trim());
 		} else {
 			this.text.set_text("Error running script.");
 		}
+
+		this.lastUpdatedLabel.set_text(lastUpdatedText);
 
 		// Schedule next run in 1800 seconds (30 minutes)
 		Mainloop.timeout_add_seconds(1800, () => {
