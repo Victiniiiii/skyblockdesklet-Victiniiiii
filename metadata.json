@@ -5,7 +5,6 @@
 	"version": 1,
 	"maxInstances": 1,
 	"multiversion": true,
-	"stylesheet": "stylesheet.css",
 	"category": "utility",
-	"icon": "icon.svg"
+	"icon": "icon.png"
 }
