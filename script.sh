@@ -1,6 +1,5 @@
 #!/bin/bash
 
-# Parse script arguments
 MODE="$1"
 ITEM="$2"
 
@@ -26,16 +25,18 @@ if [ "$MODE" = "bazaar" ]; then
     fi
 
 elif [ "$MODE" = "auction" ]; then
+    sleep 0.5
+
     API_URL="https://sky.coflnet.com/api/auctions/tag/${ITEM}/active/bin"
     data=$(curl -s "$API_URL")
-  
+
     count=$(echo "$data" | jq 'length')
-  
+
     if [ "$count" -gt 0 ]; then
         lowest_price=$(echo "$data" | jq -r '.[0].startingBid')
         lowest_price_int=$(printf "%.0f" "$lowest_price")
         formatted_lowest_price=$(format_number "$lowest_price_int")
-        
+
         echo "$ITEM"
         echo "Lowest BIN: $formatted_lowest_price coins"
     else

@@ -44,6 +44,59 @@ SkyblockPricesDesklet.prototype = {
 		this.setupUpdateLoop();
 	},
 
+	_runScriptAsync: function (command, container) {
+		const Gio = imports.gi.Gio;
+
+		try {
+			let [success, argv] = GLib.shell_parse_argv(command);
+			let proc = new Gio.Subprocess({
+				argv: argv,
+				flags: Gio.SubprocessFlags.STDOUT_PIPE | Gio.SubprocessFlags.STDERR_PIPE,
+			});
+
+			proc.init(null);
+			proc.communicate_utf8_async(null, null, (proc, res) => {
+				try {
+					let [, stdout, stderr] = proc.communicate_utf8_finish(res);
+					let output = stdout.trim();
+
+					let itemBox = new St.BoxLayout({
+						vertical: true,
+						style_class: "item-box",
+					});
+
+					let lines = output
+						.split("\n")
+						.map(l => l.trim())
+						.filter(l => l !== "");
+
+					lines.forEach((line, index) => {
+						let label = new St.Label({
+							text: line,
+							style_class: index === 0 ? "item-name" : "item-price",
+						});
+						itemBox.add(label);
+
+						if (index < lines.length - 1) {
+							let itemSeparator = new St.BoxLayout({ style_class: "item-separator" });
+							itemBox.add(itemSeparator);
+						}
+					});
+
+					container.add(itemBox);
+				} catch (e) {
+					global.logError("Async script output error: " + e.message);
+					let errorLabel = new St.Label({ text: "Error parsing result" });
+					container.add(errorLabel);
+				}
+			});
+		} catch (e) {
+			global.logError("Failed to run async script: " + e.message);
+			let errorLabel = new St.Label({ text: "Script failed to run" });
+			container.add(errorLabel);
+		}
+	},
+
 	parseItemsLists: function () {
 		if (this.bazaarItemsList && this.bazaarItemsList.trim() !== "") {
 			this.bazaarItems = this.bazaarItemsList
@@ -80,7 +133,6 @@ SkyblockPricesDesklet.prototype = {
 	setupUI: function () {
 		this.mainBox = new St.BoxLayout({
 			vertical: true,
-			width: 300,
 			style_class: "skyblock-desklet",
 		});
 
@@ -88,6 +140,7 @@ SkyblockPricesDesklet.prototype = {
 			text: "Victiniiiii's Skyblock Desklet.\nLast Updated: N/A",
 			style_class: "lastUpdatedLabel",
 		});
+
 		this.mainBox.add(this.lastUpdatedLabel);
 
 		this.scrollView = new ScrollView({
@@ -146,54 +199,9 @@ SkyblockPricesDesklet.prototype = {
 			if (itemName === "") continue;
 
 			itemName = itemName.replace(/"/g, '\\"');
-
 			let command = `/bin/bash "${scriptPath}" "bazaar" "${itemName}"`;
 
-			try {
-				let [res, out] = GLib.spawn_command_line_sync(command);
-
-				if (res && out) {
-					let output = out.toString().trim();
-
-					let itemBox = new St.BoxLayout({
-						vertical: true,
-						style_class: "item-box",
-					});
-
-					let lines = output.split("\n");
-					for (let j = 0; j < lines.length; j++) {
-						let line = lines[j].trim();
-						if (line !== "") {
-							let styleClass = j === 0 ? "item-name" : "item-price";
-							let textLabel = new St.Label({
-								text: line,
-								style_class: styleClass,
-							});
-							itemBox.add(textLabel);
-						}
-					}
-
-					bazaarContainer.add(itemBox);
-
-					if (i < this.bazaarItems.length - 1) {
-						let itemSeparator = new St.BoxLayout({
-							style_class: "item-separator",
-						});
-						bazaarContainer.add(itemSeparator);
-					}
-				} else {
-					let errorLabel = new St.Label({
-						text: "Error fetching " + this.bazaarItems[i],
-					});
-					bazaarContainer.add(errorLabel);
-				}
-			} catch (e) {
-				global.logError("Error updating bazaar item " + itemName + ": " + e);
-				let errorLabel = new St.Label({
-					text: "Error: " + e.message,
-				});
-				bazaarContainer.add(errorLabel);
-			}
+			this._runScriptAsync(command, bazaarContainer);
 		}
 
 		if (this.auctionItems.length > 0) {
@@ -222,54 +230,9 @@ SkyblockPricesDesklet.prototype = {
 			if (itemName === "") continue;
 
 			itemName = itemName.replace(/"/g, '\\"');
-
 			let command = `/bin/bash "${scriptPath}" "auction" "${itemName}"`;
 
-			try {
-				let [res, out] = GLib.spawn_command_line_sync(command);
-
-				if (res && out) {
-					let output = out.toString().trim();
-
-					let itemBox = new St.BoxLayout({
-						vertical: true,
-						style_class: "item-box",
-					});
-
-					let lines = output.split("\n");
-					for (let j = 0; j < lines.length; j++) {
-						let line = lines[j].trim();
-						if (line !== "") {
-							let styleClass = j === 0 ? "item-name" : "item-price";
-							let textLabel = new St.Label({
-								text: line,
-								style_class: styleClass,
-							});
-							itemBox.add(textLabel);
-						}
-					}
-
-					auctionContainer.add(itemBox);
-
-					if (i < this.auctionItems.length - 1) {
-						let itemSeparator = new St.BoxLayout({
-							style_class: "item-separator",
-						});
-						auctionContainer.add(itemSeparator);
-					}
-				} else {
-					let errorLabel = new St.Label({
-						text: "Error fetching " + this.auctionItems[i],
-					});
-					auctionContainer.add(errorLabel);
-				}
-			} catch (e) {
-				global.logError("Error updating auction item " + itemName + ": " + e);
-				let errorLabel = new St.Label({
-					text: "Error: " + e.message,
-				});
-				auctionContainer.add(errorLabel);
-			}
+			this._runScriptAsync(command, auctionContainer);
 		}
 
 		let currentTime = new Date();

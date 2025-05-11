@@ -5,6 +5,8 @@
 }
 
 .skyblock-desklet {
+	width: 300px;
+	max-height: 1000px;
 	background-color: rgba(30, 30, 40, 0.85);
 	border-radius: 12px;
 	border: 1px solid rgba(100, 100, 255, 0.3);
@@ -13,7 +15,7 @@
 }
 
 .lastUpdatedLabel {
-	font-size: 10pt;
+	font-size: 15px;
 	font-style: italic;
 	color: #aaa;
 	margin: 5px 0 10px 0;
@@ -22,7 +24,7 @@
 }
 
 .section-header {
-	font-size: 14pt;
+	font-size: 20px;
 	font-weight: bold;
 	color: #7ba6ff;
 	margin: 10px 0 5px 0;
@@ -55,13 +57,13 @@
 .item-name {
 	font-weight: bold;
 	color: #afd4ff;
-	font-size: 11pt;
+	font-size: 16px;
 	margin-bottom: 3px;
 }
 
 .item-price {
 	color: #d4ff7f;
-	font-size: 10pt;
+	font-size: 14px;
 }
 
 .item-separator {
