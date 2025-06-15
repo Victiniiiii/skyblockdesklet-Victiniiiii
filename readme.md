@@ -13,8 +13,12 @@ If you don't know what this if for, you can think of it like as a stock market b
 
 ## How to use?
 
-jq library is needed for processing JSON files in shell files.  
-First, do sudo apt install jq  
+First, install these packages:
+```sudo apt install curl jq gawk```  
+curl: for api requests  
+jq: for parsing JSON  
+gawk: for locale-aware number formatting with thousands separator (printf "%'d")  
+
 Then go to ~/.local/share/cinnamon/desklets/  
 Make a folder named skyblockdesklet@Victiniiiii  
 Move all the repository files, and that's it!  
