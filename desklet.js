@@ -178,30 +178,29 @@ SkyblockPricesDesklet.prototype = {
 				vertical: true,
 				style_class: "section-container",
 			});
-
-			let bazaarHeader = new St.Label({
-				text: "Bazaar Items",
-				style_class: "section-header",
-			});
-			bazaarContainer.add(bazaarHeader);
-
-			let headerSeparator = new St.BoxLayout({
-				style_class: "header-separator",
-				height: 2,
-			});
-			bazaarContainer.add(headerSeparator);
-
+			bazaarContainer.add(
+				new St.Label({
+					text: "Bazaar Items",
+					style_class: "section-header",
+				})
+			);
+			bazaarContainer.add(
+				new St.BoxLayout({
+					style_class: "header-separator",
+					height: 2,
+				})
+			);
 			this.contentBox.add(bazaarContainer);
-		}
 
-		for (let i = 0; i < this.bazaarItems.length; i++) {
-			let itemName = this.bazaarItems[i].trim();
-			if (itemName === "") continue;
-
-			itemName = itemName.replace(/"/g, '\\"');
-			let command = `/bin/bash "${scriptPath}" "bazaar" "${itemName}"`;
-
-			this._runScriptAsync(command, bazaarContainer);
+			for (let i = 0; i < this.bazaarItems.length; i++) {
+				let name = this.bazaarItems[i].trim();
+				if (!name) continue;
+				name = name.replace(/"/g, '\\"');
+				let slot = new St.BoxLayout({ vertical: true });
+				bazaarContainer.add(slot);
+				let cmd = `/bin/bash "${scriptPath}" "bazaar" "${name}"`;
+				this._runScriptAsync(cmd, slot);
+			}
 		}
 
 		if (this.auctionItems.length > 0) {
@@ -209,39 +208,38 @@ SkyblockPricesDesklet.prototype = {
 				vertical: true,
 				style_class: "section-container",
 			});
-
-			let auctionHeader = new St.Label({
-				text: "Auction House Items",
-				style_class: "section-header",
-			});
-			auctionContainer.add(auctionHeader);
-
-			let headerSeparator = new St.BoxLayout({
-				style_class: "header-separator",
-				height: 2,
-			});
-			auctionContainer.add(headerSeparator);
-
+			auctionContainer.add(
+				new St.Label({
+					text: "Auction House Items",
+					style_class: "section-header",
+				})
+			);
+			auctionContainer.add(
+				new St.BoxLayout({
+					style_class: "header-separator",
+					height: 2,
+				})
+			);
 			this.contentBox.add(auctionContainer);
+
+			for (let i = 0; i < this.auctionItems.length; i++) {
+				let name = this.auctionItems[i].trim();
+				if (!name) continue;
+				name = name.replace(/"/g, '\\"');
+				let slot = new St.BoxLayout({ vertical: true });
+				auctionContainer.add(slot);
+				let cmd = `/bin/bash "${scriptPath}" "auction" "${name}"`;
+				this._runScriptAsync(cmd, slot);
+			}
 		}
 
-		for (let i = 0; i < this.auctionItems.length; i++) {
-			let itemName = this.auctionItems[i].trim();
-			if (itemName === "") continue;
-
-			itemName = itemName.replace(/"/g, '\\"');
-			let command = `/bin/bash "${scriptPath}" "auction" "${itemName}"`;
-
-			this._runScriptAsync(command, auctionContainer);
-		}
-
-		let currentTime = new Date();
-		let currentTimeFormatted = currentTime.toLocaleTimeString([], {
+		let now = new Date();
+		let fmt = now.toLocaleTimeString([], {
 			hour: "2-digit",
 			minute: "2-digit",
 			hour12: false,
 		});
-		this.lastUpdatedLabel.set_text("Victiniiiii's Skyblock Desklet.\nLast Updated: " + currentTimeFormatted);
+		this.lastUpdatedLabel.set_text("Victiniiiii's Skyblock Desklet.\nLast Updated: " + fmt);
 
 		return true;
 	},
