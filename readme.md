@@ -13,7 +13,7 @@ If you don't know what this if for, you can think of it like as a stock market b
 
 ## How to use?
 
-First, install these packages:
+First, install these packages:   
 ```sudo apt install curl jq gawk```  
 curl: for api requests  
 jq: for parsing JSON  

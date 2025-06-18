@@ -12,6 +12,18 @@
 		"units": "minutes",
 		"description": "Update interval"
 	},
+	"use_24_hour_format": {
+		"type": "switch",
+		"default": true,
+		"description": "Use 24-hour time format",
+		"tooltip": "Toggle between 12-hour (AM/PM) and 24-hour time format"
+	},
+	"buy_or_sell_in_diff": {
+		"type": "switch",
+		"default": true,
+		"description": "Buy or sell prices while comparing",
+		"tooltip": "Toggle between buy and sell prices checked for box border colors"
+	},
 	"header_bazaar": {
 		"type": "header",
 		"description": "Bazaar Settings"
@@ -19,7 +31,7 @@
 	"bazaar_items_list": {
 		"type": "textview",
 		"default": "COMPOST\nENCHANTED_BREAD\nHOT_POTATO_BOOK",
-		"description": "Bazaar Items to track (one item ID per line)",
+		"description": "Bazaar Items to track (one item ID per line) - add expected price at the end or don't",
 		"height": 100
 	},
 	"header_auction": {
@@ -29,7 +41,7 @@
 	"auction_items_list": {
 		"type": "textview",
 		"default": "Chestplate_of_Divan\nWarden_Helmet\nHyperion",
-		"description": "Auction House Items to track (one item tag per line)",
+		"description": "Auction House Items to track (one item tag per line) - add expected price at the end or don't",
 		"height": 100
 	},
 	"apply_button": {
