@@ -164,16 +164,36 @@ SkyblockPricesDesklet.prototype = {
 
 	getColorFromPercentage: function (percentage) {
 		let clampedPerc = Math.max(-100, Math.min(100, percentage));
-		let norm = Math.abs(clampedPerc) / 100;
-		let alpha = 0.2 + 0.8 * norm;
 
-		if (clampedPerc >= 0) {
-			return `rgba(0, 255, 0, ${alpha})`;
+		let r, g, b;
+
+		if (clampedPerc <= -10) {
+			let t = (clampedPerc + 100) / 90;
+			r = Math.round(139 + (255 - 139) * t);
+			g = 0;
+			b = 0;
+		} else if (clampedPerc <= 0) {
+			let t = (clampedPerc + 10) / 10;
+			r = 255;
+			g = Math.round(255 * t);
+			b = 0;
+		} else if (clampedPerc <= 10) {
+			let t = clampedPerc / 10;
+			r = Math.round(255 * (1 - t));
+			g = 255;
+			b = 0;
 		} else {
-			return `rgba(255, 0, 0, ${1 - alpha})`;
+			let t = (clampedPerc - 10) / 90;
+			r = 0;
+			g = Math.round(255 - (255 - 100) * t);
+			b = 0;
 		}
-	},
 
+		let alpha = 0.3 + (0.7 * Math.abs(clampedPerc)) / 100;
+
+		return `rgba(${r}, ${g}, ${b}, ${alpha})`;
+	},
+	
 	parseItemsLists: function () {
 		if (this.bazaarItemsList && this.bazaarItemsList.trim() !== "") {
 			this.bazaarItems = this.bazaarItemsList
